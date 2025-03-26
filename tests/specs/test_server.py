@@ -1,7 +1,7 @@
 import pytest
 from pydantic import AnyHttpUrl
 
-from apidantic.specs.core import ServerObject, ServerVariableObject
+from apidantic.specs.server import ServerObject, ServerVariableObject
 
 
 def test_error_if_variable_default_not_in_enum():
