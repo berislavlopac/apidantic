@@ -1,0 +1,91 @@
+[project]
+name = "apidantic"
+version = "0.1.0"
+description = "Python library to define OpenAPI specifications using Pydantic models."
+readme = "README.md"
+authors = [
+    { name = "Berislav Lopac", email = "berislav@lopac.net" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic[email]>=2.10.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+dependencies = [
+    "pydantic>=2.10.6",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-spec>=4.0.0",
+    "ruff>=0.9.6",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+
+[tool.coverage.run]
+source = ["apidantic/", ]
+omit = ["*/tests/*", ]
+
+[tool.coverage.report]
+skip_covered = false
+show_missing = true
+fail_under = 90
+exclude_also = ["pragma: no cover", "@abstract",]
+
+[tool.mypy]
+mypy_path = "apidantic/"
+files = ["apidantic/"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 96
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [  # see https://docs.astral.sh/ruff/rules/
+    "E",    # basic pycodestyle rules
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes rules
+    "I",    # isort rules
+    "N",    # PEP8 naming conventions
+    "PLR",  # Pylint refactoring recommendations
+    "PTH",  # recommends to use pathlib instead of os.path
+    "UP",   # pyupgrade suggestions
+    "BLE",  # locates blind exception capture
+    "B",    # locates possible bugs and design problems
+    "A",    # locates shadowing of builtin names
+    "C4",   # locates possible issues with comprehensions
+    "DTZ",  # locates incorrect use of timezone information
+    "PIE",  # miscellaneous linting rules
+    "TRY",  # locates potential exception handling antipatterns
+    "PERF", # locates potential performance issues
+    "RUF",  # various Ruff-specific linting rules
+    "S",    # various insecure code, with bandit
+]
+ignore = [
+#    "B008",   # do not perform function calls in argument defaults
+#    "S101",   # use of assert detected
+#    "B904",   # allow raise without from inside except
+#    "ANN401", # allow using typing.Any
+    "COM812", # disable missing trailing commas for compatibility with ruff format
+    "TRY003", # allow long messages outside the exception class
+]
+
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/*" = ["PLR0913", "S101"]
