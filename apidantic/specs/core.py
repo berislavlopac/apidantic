@@ -120,6 +120,18 @@ class ServerObject(BaseModel):
         ),
     ] = None
 
+    @model_validator(mode="after")
+    def substitute_variables(self):
+        """Replace variable placeholders with corresponding values."""
+        if self.variables:
+            variables = {key: value.default for key, value in self.variables.items()}
+            self.url = AnyHttpUrl(str(self.url).format(**variables))
+        elif "{" in str(self.url):
+            raise ValueError(
+                "The server URL seems to include variables but values are not provided."
+            )
+        return self
+
 
 class ServerVariableObject(BaseModel):
     """An object representing a Server Variable for server URL template substitution."""

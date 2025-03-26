@@ -33,6 +33,7 @@ default-groups = ["dev"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
+spec_test_format = "{result} {docstring_summary}"
 
 [tool.coverage.run]
 source = ["apidantic/", ]
